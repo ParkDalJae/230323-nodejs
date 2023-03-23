@@ -35,7 +35,7 @@ const server = http.createServer((request, response)=>{
             serverStaticFile(response, './script.js','text/javascript',200);
             break
         default:
-            serverStaticFile(response, './404.html','text/html',200);
+            serverStaticFile(response, './404.html','text/html',404);
             break
         
     }
