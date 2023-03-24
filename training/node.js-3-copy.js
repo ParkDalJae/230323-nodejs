@@ -1,7 +1,6 @@
 //Node.js로 만드는 클래식한 앱 서버
 import http from "http"
 import fs from "fs"
-import path from "path"
 
 function serverStaticFile(response,path,contentType,responseCode){
     fs.readFile(path,function(err,data){
@@ -17,8 +16,8 @@ function serverStaticFile(response,path,contentType,responseCode){
 }
 
 const server = http.createServer((request, response)=>{
-    const url = request.url.toLowerCase(); //소문자로 변환.
-    
+    const url = request.url.replace(\/:=+?!,'').toLowerCase(); //소문자로 변환.
+    console.log(url)
     switch(url){ //조건문이 다양하거나(if문) 복잡할때는 switch문 사용
         case '/':
             serverStaticFile(response, './index.html','text/html',200);
@@ -26,7 +25,7 @@ const server = http.createServer((request, response)=>{
         case '/about':
             serverStaticFile(response, './about.html','text/html',200);
             break
-        case '/content':
+        case url.startsWith('/content'):
             serverStaticFile(response, './content.html','text/html',200);
             break
         case '/style.css':
